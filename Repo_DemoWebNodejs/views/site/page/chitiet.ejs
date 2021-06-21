@@ -1,0 +1,93 @@
+<% include ../layout/header.ejs %>
+<!-- Header End -->
+
+<div id="maincontainer">
+  <section id="product">
+    <div class="container">      
+      <!-- Product Details-->
+      <div class="row">
+       <!-- Left Image-->
+        <div class="span5">
+          <ul class="thumbnails mainimage">
+            <li class="span5">
+              <a  rel="position: 'inside' , showTitle: false, adjustX:-4, adjustY:-4" class="thumbnail cloud-zoom" href="upload/<%= data.img%>">
+                <img src="upload/<%= data.img%>" alt="" title="">
+              </a>
+            </li>
+          </ul>
+        </div>
+         <!-- Right Details-->
+        <div class="span7">
+          <div class="row">
+            <div class="span7">
+              <h1 class="productname"><span class="bgnone"><%= data.name%></span></h1>
+              <div class="productprice">
+                <div class="productpageprice">
+                  <span class="spiral"></span><%= data.price%></div>
+              </div>
+              <ul class="productpagecart">
+                <h4 style="margin-left: 270px;">Bình luận của bạn</h4>
+                <li><a id="<%= data._id%>" class="cart" href="/add-cart.<%= data._id %>">Thêm Vào Giỏ Hàng</a>
+                </li>
+                <li>
+                  <form action="" method="POST">
+                    <textarea name="" id="" cols="30" rows="3"></textarea>
+                    <!-- <a id="" href="/binh-luan.html" class="btn btn-primary">Nhập</a> -->
+                    <button class="btn btn-orange" type="button" onclick="commentSumit()">Nhập</button>
+                  </form>
+                </li>
+              </ul>
+         <!-- Product Description tab & comments-->
+            <div class="productdesc">
+              <ul class="nav nav-tabs" id="myTab">  
+                <li class="active"><a data-toggle="tab" href="#description">Chi tiết sản phẩm</a>
+                </li>
+                <li class=""><a data-toggle="tab" href="#comment">Phần Bình Luận</a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <div class="tab-pane active" id="description">
+                  <%= data.des%>
+                </div>
+                <div class="tab-pane" id="comment">
+                  <%= data.comment%>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!--  Related Products-->
+  <section id="related" class="row">
+    <div class="container">
+      <h1 class="heading1"><span class="maintext">Sản Phẩm Khác</span><span class="subtext"></span></h1>
+      <ul class="thumbnails">
+        <% product.forEach(function(pro){ %>
+
+            <li class="span3">
+              <a class="prdocutname" href="product.html"> <%= pro.name %> </a>
+              <div class="thumbnail">
+                <span class="sale tooltip-test">Sale</span>
+                <a href="/chi-tiet/<%= pro.nameKhongDau%>.<%= pro._id%>.<%= pro.cateId%>.html"><img alt="" src="upload/<%= pro.img %>"></a>
+                <div class="pricetag">
+                  <span class="spiral"></span><a href="/add-cart.<%= pro._id %>" class="productcart">Thêm Vào Giỏ</a>
+                  <div class="price">
+                    <div class="pricenew"><%= pro.price %></div>
+                  </div>
+                </div>
+              </div>
+            </li>
+      <% })%>
+      </ul>
+    </div>
+  </section>
+
+  
+</div>
+
+<!-- Footer -->
+<% include ../layout/footer.ejs %>

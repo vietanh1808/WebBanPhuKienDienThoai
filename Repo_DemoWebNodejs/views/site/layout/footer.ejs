@@ -1,0 +1,163 @@
+<footer id="footer">
+  <section class="footersocial">
+    <div class="container">
+      <div class="row">
+        <div class="span3 aboutus">
+          <h2>Giới thiệu </h2>
+          <p> Khi sở hữu một chiếc điện thoại thông minh, bạn sẽ mong muốn có đầy đủ các phụ kiện đi kèm như bao da, ốp lưng, tai nghe… để có thể giải trí, làm việc một cách linh hoạt nhất ở mọi lúc, mọi nơi. Có rất nhiều địa điểm để bạn có thể tìm thấy những phụ kiện này nhưng có lẽ dienthoaidanchoi.Com sẽ là sự lựa chọn “kinh tế” nhất mà bạn có thể suy nghĩ đến. <br>
+            <br>
+            Ở dienthoaidanchoi.com, bạn có thể tìm thấy tất cả những sản phẩm phụ kiện của điện thoại từ tai nghe, bao đựng điện thoại, case ốp lưng, dán màn hình, đầu đọc thẻ, pin, sạc… Đặc biệt là có đầy đủ các loại linh kiện cho những dòng điện thoại từ cơ bản nhất đến thịnh hành nhất hoặc HOT nhất. </p>
+        </div>
+        <div class="span3 contact">
+          <h2>Liên Hệ</h2>
+          <ul>
+            <li class="phone"> (+84) 386 605 825</li>
+            <li class="mobile"> (+84) 912 663 628</li>
+            <li class="email"> vietanhnguyen1808@gmail.com</li>
+            <li class="email"> dattt397@gmail.com</li>
+          </ul>
+        </div>
+        <div class="span3 twitter">
+          <h2>Facebook </h2>
+          <div id="Facebook">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="footerlinks">
+    <div class="container">
+      <div class="info">
+        <ul>
+          <li><a href="#">Chính sách bảo mật</a>
+          </li>
+          <li><a href="#">Điều khoản sử dụng</a>
+          </li>
+          <li><a href="#">Chi nhánh</a>
+          </li>
+          <li><a href="#">Bản tin</a>
+          </li>
+        </ul>
+      </div>
+      <div id="footersocial">
+        <a href="#" title="Facebook" class="facebook">Facebook</a>
+        <a href="#" title="Twitter" class="twitter">Twitter</a>
+        <a href="#" title="Linkedin" class="linkedin">Linkedin</a>
+        <a href="#" title="rss" class="rss">rss</a>
+        <a href="#" title="Googleplus" class="googleplus">Googleplus</a>
+        <a href="#" title="Skype" class="skype">Skype</a>
+        <a href="#" title="Flickr" class="flickr">Flickr</a>
+      </div>
+    </div>
+  </section>
+  <section class="copyrightbottom">
+    <div class="container">
+      <div class="row">
+        <div class="span6"> © 2021. CÔNG TY CỔ PHẦN XÂY DỰNG VÀ ĐẦU TƯ THƯƠNG MẠI ĐỨC VŨ. </div>
+        <div class="span6 textright"> Địa chỉ: tòa nhà vinaconex 2 - trung văn- từ liêm- Hà Nội  </div>
+      </div>
+    </div>
+  </section>
+  <a id="gotop" href="#">Back to top</a>
+</footer>
+<!-- javascript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="js/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/respond.min.js"></script>
+<script src="js/application.js"></script>
+<script src="js/bootstrap-tooltip.js"></script>
+<script defer src="js/jquery.fancybox.js"></script>
+<script defer src="js/jquery.flexslider.js"></script>
+<script type="text/javascript" src="js/jquery.tweet.js"></script>
+<script  src="js/cloud-zoom.1.0.2.js"></script>
+<script  type="text/javascript" src="js/jquery.validate.js"></script>
+<script type="text/javascript"  src="js/jquery.carouFredSel-6.1.0-packed.js"></script>
+<script type="text/javascript"  src="js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript"  src="js/jquery.touchSwipe.min.js"></script>
+<script type="text/javascript"  src="js/jquery.ba-throttle-debounce.min.js"></script>
+<script defer src="js/custom.js"></script>
+<script type="text/javascript"  src="js/jquery-3.6.0.min/index.js"></script>
+<script type="text/javascript">
+
+
+    $(document).ready(function(){
+        menu();
+        $( ".searchInputItem" ).keyup(function() {      // Search Item
+            var value = $( this ).val();
+            // $( "#ppp" ).text( value );
+
+            $(".thumbnails li").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+          });
+        }).keyup();
+        
+        // $('.commentBtn').click(function() {
+        //   var value = $(this).attr('textar')
+        // });
+
+        $('.updateCart').click(function(){          // Update Item in Cart
+            var id = $(this).attr('id');
+            var soluong = parseInt($('#'+id).val());
+            var kho = $(this).attr('kho');
+            if(soluong > 0){
+                $.post(
+                    './updateCart',
+                    {
+                      id      : id,
+                      soluong : soluong
+                    }, function(data){                     
+                      
+                      if(data.st ==1) location.href = "gio-hang.html";
+                    }
+                ), 'json';
+            }
+        });
+
+         $('.delCart').click(function(){      // Delete Item in Cart
+            var id = $(this).attr('id');
+                $.post(
+                     {
+                      id      : id
+                    }, function(data){             
+                      if(data.st ==1) location.href = "gio-hang.html";
+                    }
+                ), 'json';
+        });
+    });
+
+    function menu(){
+      $.post('./menu', { },function(data){
+            var classMenu = '';
+            var hash = location.pathname;
+
+            if(hash == '/') var menu = '<li><a class="active" href="/" >Home</a></li>';
+            else var menu = '<li><a  href="/">Home</a></li>';
+       
+            data.forEach(function(item){
+              var urlMenu     = '/cate/' + item.nameKhongDau +'.' + item._id + '.html';
+               var pathName   = location.pathname;
+               pathName       = pathName.split('.')[2];
+               
+               menu += '<li><a  href="'+ urlMenu +'" ';
+               if(urlMenu == hash || item._id == pathName) menu += 'class="active"';
+               menu += '>'+item.name+'</a></li>';
+            });
+            $('#categorymenu ul.categorymenu').html(menu);
+          }
+        );
+    }
+
+    function commentSumit() {
+      var value = $("textarea").val(); 
+      var id = $('.cart').attr('id');
+      var link = window.location.href;
+      var header = $.getJSON(link);
+
+      $.post('./binh-luan', {value: value, id: id, header: header});
+    }
+
+</script>
+</body>
+</html>

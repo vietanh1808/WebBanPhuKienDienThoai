@@ -1,0 +1,47 @@
+{
+  "name": "shopping",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "alert": "^5.0.10",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "bower": "^1.8.12",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.3",
+    "ejs": "~2.5.6",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^3.2.1",
+    "fs": "0.0.1-security",
+    "mongodb": "^3.6.6",
+    "mongoose": "^5.12.14",
+    "morgan": "^1.10.0",
+    "mquery": "^3.2.5",
+    "multer": "^1.3.0",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "popups": "^1.1.3",
+    "serve-favicon": "~2.4.2"
+  },
+  "description": "nội chung cơ bản để tìm hiểu về nodejs exptess",
+  "main": "app.js",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vietanh1808/webDemoNodejs.git"
+  },
+  "bugs": {
+    "url": "https://github.com/vietanh1808/webDemoNodejs/issues"
+  },
+  "homepage": "https://github.com/vietanh1808/webDemoNodejs#readme"
+}

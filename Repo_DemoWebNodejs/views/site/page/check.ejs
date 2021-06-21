@@ -1,0 +1,90 @@
+<% include ../layout/header.ejs %>
+<!-- Header End -->
+
+<div id="maincontainer">
+  <section id="product">
+    <div class="container">
+     <!--  breadcrumb --> 
+      <ul class="breadcrumb">
+        <li>
+          <a href="#">Home</a>
+          <span class="divider">/</span>
+        </li>
+        <li class="active">thông tin</li>
+      </ul>  
+      <!-- Contact Us-->
+      <h1 class="heading1"><span class="maintext">Thông tin Đặt Hàng</span><span class="subtext">  </span></h1>
+      <div class="row">
+        <% if(success_msg != ''){ %> 
+            <div class="alert alert-success"><%= success_msg%></div>
+        <% } %>
+        <% if(errors) { %>
+        <div class="alert alert-danger">
+            <% errors.forEach(function(e){ %>
+
+                <%= e.msg %> <br/>
+            <%});%>
+
+        </div>
+        <% };%>
+        <div class="span9">
+          <form class="form-horizontal " action="" method="post">
+            <fieldset>
+              <div class="control-group">
+                <label for="name" class="control-label">Họ Và Tên <span class="required">*</span></label>
+                <div class="controls">
+                  <input type="text"  class="required" id="name" value="" name="name">
+                </div>
+              </div>
+              <div class="control-group">
+                <label for="email" class="control-label">Địa chỉ Email <span class="required">*</span></label>
+                <div class="controls">
+                  <input type="email"  class="required email" id="email" value="" name="email">
+                </div>
+              </div>
+              <div class="control-group">
+                <label for="url" class="control-label">Điện thoại </label>
+                <div class="controls">
+                  <input type="text" id="phone" value="" name="phone">
+                </div>
+              </div>
+              <div class="control-group">
+                <label for="message" class="control-label">nội dung yêu cầu</label>
+                <div class="controls">
+                  <textarea  class="required" rows="6" cols="40" id="message" name="message"></textarea>
+                </div>
+              </div>
+              <div class="form-actions">
+                <input class="btn btn-orange" type="submit" value="Gửi" id="submit_id">
+                <input class="btn" type="reset" value="Làm lại">
+              </div>
+            </fieldset>
+          </form>
+        </div>
+        
+        <!-- Sidebar Start-->
+        <div class="span3">
+          <aside>
+            <div class="sidewidt">
+              <h2 class="heading2"><span>Liên Hệ Với Chúng Tôi</span></h2>
+              <p> Trần tiến Đạt<br>
+                Nguyễn Việt Anh<br>
+               Vũ Lương Việt Đức<br>
+                <br>
+                Phone: (038) 606-2926<br>
+                Fax: (123) 444-JQKA<br>
+                Email: boyvipban@gmail.com<br>
+                Web: dienthoaidanchoi.com<br>
+              </p>
+            </div>
+          </aside>
+        </div>
+        <!-- Sidebar End-->
+        
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Footer -->
+<% include ../layout/footer.ejs %>
