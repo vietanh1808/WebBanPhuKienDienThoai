@@ -11,7 +11,7 @@ var Product = new Schema({
   price 		: Number,
   st 			: Number,
   soluong : Number,
-  comment : String
+  comment : Array
 
 },{collection : 'product'});
 

@@ -11,14 +11,7 @@ var LocalStrategy = require('passport-local').Strategy;
 
 /* GET home page. */
 router.get('/', checkAdmin, function(req, res, next) {
-  User.find( {role: req.user.role} ).then(data => {
-    if (data[0].role === 'admin') {
       res.render('admin/main/index');
-    } else {
-        res.redirect('/');
-    }
-  });
-  console.log('admin: ', req.session);
 });
 
 router.get('/dang-nhap.html', function(req, res, next) {
@@ -40,7 +33,7 @@ passport.use(new LocalStrategy({
       User.findOne({email: username}, function(err, username){
           if(err) throw err;
           if(username){
-            if (username.password === password) {
+            if (username.password === password && username.role === 'admin') {
                       return done(null, username);
             } else {
                      return done(null, false, { message: 'Tài Khoảng Không Đúng' });

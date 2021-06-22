@@ -12,10 +12,11 @@ var bcrypt = require('bcryptjs');
 
 var admin = require('./routes/admin');
 var index = require('./routes/index');
-var users = require('./routes/users');
+// var users = require('./routes/users');
 var cate = require('./routes/cate');
 var product = require('./routes/product');
 var cart = require('./routes/cart');
+
 
 var salt = bcrypt.genSaltSync(10);
 var hash = bcrypt.hashSync("B4c0/\/", salt);
@@ -56,7 +57,7 @@ app.use(expressValidator({
 }));
 
 app.use(session({
-  secret: 'user1',
+  secret: 'admin',
   resave: true,
   key: 'user',
   saveUninitialized: true
@@ -76,7 +77,7 @@ app.use(function(req, res, next){
 
 app.use('/admin', admin);
 app.use('/', index);
-app.use('/users', users);
+// app.use('/users', users);
 app.use('/admin/cate', cate);
 app.use('/admin/product', product);
 app.use('/admin/cart', cart);

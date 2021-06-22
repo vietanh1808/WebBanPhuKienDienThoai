@@ -10,17 +10,14 @@ var LocalStrategy = require('passport-local').Strategy;
 
 /* GET home page. */
 
-router.get('/', function(req, res, next) {
-  res.render('site/login/index');
-});
-
 router.get('/dang-nhap-user.html', function(req, res, next) {
-  res.redirect('/admin');
+  res.redirect('site/login/login');
+  // res.redirect('site/login/index');
 });
 
 router.post('/dang-nhap-user.html',
-  passport.authenticate('local', { successRedirect: '/site',
-                                   failureRedirect: '/site/dang-nhap-user.html',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/dang-nhap-user.html',
                                    failureFlash: true })
 );
 
@@ -32,7 +29,7 @@ passport.use(new LocalStrategy({
       User.findOne({email: username}, function(err, username){
           if(err) throw err;
           if(username){
-            if (username.password === password) {
+            if (username.password === password && username.role === 'user') {
                       return done(null, username);
             } else {
                      return done(null, false, { message: 'Tài Khoảng Không Đúng' });
@@ -42,7 +39,6 @@ passport.use(new LocalStrategy({
           }
       });
   }
-
 ));
 
 passport.serializeUser(function(email, done) {
@@ -65,7 +61,7 @@ function checkAdmin(req, res, next){
     if(req.isAuthenticated()){
       next();
     }else{
-        res.redirect('/site/dang-nhap-user.html');
+        res.redirect('/dang-nhap-user.html');
     }
 }
 

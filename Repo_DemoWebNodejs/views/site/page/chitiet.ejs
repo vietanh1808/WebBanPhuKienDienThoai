@@ -27,30 +27,37 @@
               </div>
               <ul class="productpagecart">
                 <h4 style="margin-left: 270px;">Bình luận của bạn</h4>
-                <li><a id="<%= data._id%>" class="cart" href="/add-cart.<%= data._id %>">Thêm Vào Giỏ Hàng</a>
+                <li>
+                  <a id="<%= data._id%>" class="cart" href="/add-cart.<%= data._id %>">Thêm Vào Giỏ Hàng</a>
                 </li>
                 <li>
                   <form action="" method="POST">
                     <textarea name="" id="" cols="30" rows="3"></textarea>
                     <!-- <a id="" href="/binh-luan.html" class="btn btn-primary">Nhập</a> -->
-                    <button class="btn btn-orange" type="button" onclick="commentSumit()">Nhập</button>
+                    <!-- <button class="btn btn-orange" type="button" onclick="commentSumit()">Nhập</button> -->
+                    <a href="/binh-luan.html" class="btnComment">Nhập</a>
                   </form>
                 </li>
               </ul>
          <!-- Product Description tab & comments-->
             <div class="productdesc">
               <ul class="nav nav-tabs" id="myTab">  
-                <li class="active"><a data-toggle="tab" href="#description">Chi tiết sản phẩm</a>
+                <li class=""><a data-toggle="tab" href="#description">Chi tiết sản phẩm</a>
                 </li>
-                <li class=""><a data-toggle="tab" href="#comment">Phần Bình Luận</a>
+                <li class="active"><a data-toggle="tab" href="#comment">Phần Bình Luận</a>
                 </li>
               </ul>
               <div class="tab-content">
-                <div class="tab-pane active" id="description">
+                <div class="tab-pane " id="description">
                   <%= data.des%>
                 </div>
-                <div class="tab-pane" id="comment">
-                  <%= data.comment%>
+                <div class="tab-pane active" id="comment">
+                  <% data.comment.forEach(function(d){ %>
+                    <% if ((d.value !== "") && (d !== "")) {%>
+                      <p style="font-size: 15px; color: black;"><strong> <%= d.user %> <b>-</b> <%= d.time %> </strong></p>
+                      <p style="padding-left: 20px;"><%= d.value %></p>
+                    <% }%>
+                  <% }) %>
                 </div>
               </div>
             </div>

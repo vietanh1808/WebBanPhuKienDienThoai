@@ -97,6 +97,7 @@ function checkAdmin(req, res, next){
       next();
     }else{
 		  res.redirect('/admin/dang-nhap.html');
+		  
 			// next();
     }
 }

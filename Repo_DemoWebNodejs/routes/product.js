@@ -75,7 +75,8 @@ router.post('/them-product.html', checkAdmin, upload.single('hinh'), function (r
 			des 			: req.body.des,
 			price 			: req.body.gia,
 	        soluong 		: req.body.soluong,
-			st 				: 0
+			st 				: 0,
+			comment			: []
 		});
 
 		pro.save().then(function(){

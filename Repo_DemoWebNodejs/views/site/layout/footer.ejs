@@ -83,47 +83,45 @@
 
 
     $(document).ready(function(){
+
         menu();
         $( ".searchInputItem" ).keyup(function() {      // Search Item
             var value = $( this ).val();
-            // $( "#ppp" ).text( value );
 
             $(".thumbnails li").filter(function() {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
           });
         }).keyup();
         
-        // $('.commentBtn').click(function() {
-        //   var value = $(this).attr('textar')
-        // });
+        $('.btnComment').click(function() {           // Button Comment
+          var value = $("textarea").val(); 
+          var id = $('.cart').attr('id');
+
+          $.post('./binh-luan.html', {value: value, id: id});
+        });
 
         $('.updateCart').click(function(){          // Update Item in Cart
             var id = $(this).attr('id');
             var soluong = parseInt($('#'+id).val());
-            var kho = $(this).attr('kho');
+
             if(soluong > 0){
-                $.post(
-                    './updateCart',
-                    {
-                      id      : id,
-                      soluong : soluong
-                    }, function(data){                     
-                      
-                      if(data.st ==1) location.href = "gio-hang.html";
-                    }
-                ), 'json';
+                $.post('./updateCart',{ id: id, soluong : soluong}, function(data){                     
+                      if(data.st == 1) {
+                        location.href = "gio-hang.html";
+                      } else {
+                        location.href = "gio-hang.html";
+                        alert("Bạn đã nhập quá số lượng hàng có sẵn!")
+                      }
+                    }), 'json';
             }
         });
 
          $('.delCart').click(function(){      // Delete Item in Cart
             var id = $(this).attr('id');
-                $.post(
-                     {
-                      id      : id
-                    }, function(data){             
-                      if(data.st ==1) location.href = "gio-hang.html";
-                    }
-                ), 'json';
+
+            $.post({id: id}, function(data){             
+              if(data.st ==1) location.href = "gio-hang.html";
+            }), 'json';
         });
     });
 
@@ -152,10 +150,8 @@
     function commentSumit() {
       var value = $("textarea").val(); 
       var id = $('.cart').attr('id');
-      var link = window.location.href;
-      var header = $.getJSON(link);
 
-      $.post('./binh-luan', {value: value, id: id, header: header});
+      $.post('./binh-luan.html', {value: value, id: id});
     }
 
 </script>
