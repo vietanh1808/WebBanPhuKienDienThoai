@@ -11,12 +11,6 @@ var bcrypt = require('bcryptjs');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-// Product.find().then(function(data) {
-// 	data.forEach(e => {
-// 		e.up
-// 	});
-// });
-
 var countJson = function(json){
 	var count = 0;
 	for(var id in json){
@@ -180,7 +174,25 @@ router.post('/binh-luan.html', function (req, res, next) {
 
 router.get('/binh-luan.html', checkAdmin, function (req, res) {
 	res.redirect(req.get('referer'));
-	console.log(req.originalUrl);
+});
+
+router.post('/dang-ky-user.html', function(req, res) {
+
+	var user = new User({
+		fullname 		: req.body.name,
+		email 			: req.body.email,
+		password 		: req.body.password,
+		img				: "",
+		role			: "user"
+	});
+
+	user.save().then(function(){
+		res.redirect('/');
+  	});
+});
+
+router.get('/dang-ky-user.html', function(req, res) {
+	res.render('site/login/register', {errors: null});
 });
 
 router.get('/dang-nhap-user.html', function(req, res, next) {

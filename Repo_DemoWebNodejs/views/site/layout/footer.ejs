@@ -83,15 +83,20 @@
 
 
     $(document).ready(function(){
-
         menu();
         $( ".searchInputItem" ).keyup(function() {      // Search Item
-            var value = $( this ).val();
+          var value = $( this ).val();
 
+          if (value.length > 0) {
             $(".thumbnails li").filter(function() {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-          });
+              $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+              $('.carousel').hide();
+            });
+          } else {
+            $('.carousel').show();
+          }
         }).keyup();
+
         
         $('.btnComment').click(function() {           // Button Comment
           var value = $("textarea").val(); 
