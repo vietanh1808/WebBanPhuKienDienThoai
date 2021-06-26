@@ -87,17 +87,18 @@
         $( ".searchInputItem" ).keyup(function() {      // Search Item
           var value = $( this ).val();
 
-          if (value.length > 0) {
+          if (value.length > 1) {
             $(".thumbnails li").filter(function() {
               $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
               $('.carousel').hide();
+              $('.otherddetails').hide();
             });
           } else {
-            $('.carousel').show();
+              $('.carousel').show();
+              $('.otherddetails').show();
           }
         }).keyup();
 
-        
         $('.btnComment').click(function() {           // Button Comment
           var value = $("textarea").val(); 
           var id = $('.cart').attr('id');
@@ -105,7 +106,7 @@
           $.post('./binh-luan.html', {value: value, id: id});
         });
 
-        $('.updateCart').click(function(){          // Update Item in Cart
+        $('.updateCart').click(function(){            // Update Item in Cart
             var id = $(this).attr('id');
             var soluong = parseInt($('#'+id).val());
 
@@ -121,14 +122,20 @@
             }
         });
 
-         $('.delCart').click(function(){      // Delete Item in Cart
+         $('.delCart').click(function(){              // Delete Item in Cart
             var id = $(this).attr('id');
 
             $.post({id: id}, function(data){             
               if(data.st ==1) location.href = "gio-hang.html";
             }), 'json';
         });
-    });
+        
+        $.post('./getUser',{},function(data){   // Upload Avatar User
+              $('img.avatar').attr('src', 'upload/' + data.img);
+              $('.name').html(data.fullname);
+        });
+
+      });
 
     function menu(){
       $.post('./menu', { },function(data){

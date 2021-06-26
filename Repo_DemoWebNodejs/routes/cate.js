@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
+
 var Cate = require('../model/Cate.js');
 
 function bodauTiengViet(str) {
@@ -16,6 +17,7 @@ function bodauTiengViet(str) {
     str = str.replace(/\./g, "-");
     return str;
 }
+
 
 /* GET home page. */
 router.get('/', checkAdmin, function(req, res, next) {

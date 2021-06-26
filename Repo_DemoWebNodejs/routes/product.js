@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var multer  = require('multer');
+
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, './public/upload')
@@ -11,7 +12,6 @@ var storage = multer.diskStorage({
 });
 
 var upload = multer({ storage: storage });
-
 
 
 function bodauTiengViet(str) {
@@ -124,7 +124,6 @@ router.post('/:id/sua-product.html',  upload.single('hinh'), function (req, res)
 			 });
 			data.name 			= req.body.name;
 			data.img 			= req.file.filename;
-			console.log(data.img);
 			data.nameKhongDau 	= bodauTiengViet(req.body.name);
 			data.cateId 		= req.body.cate;
 			data.des 			= req.body.des;
@@ -134,14 +133,11 @@ router.post('/:id/sua-product.html',  upload.single('hinh'), function (req, res)
 
 			data.save();
 				req.flash('success_msg', 'Đã Sửa Thành Công');
-				res.redirect('/admin/product/'+req.params.id+'/sua-product.html');
+				// res.redirect('/admin/product/'+req.params.id+'/sua-product.html');
+				res.redirect('/admin/product/danh-sach.html');
 			//});
-
-
 		});
-
 	}
-	
 });
 
 router.get('/:id/xoa-product.html', checkAdmin,  function (req, res) {

@@ -1,15 +1,29 @@
 var express = require('express');
 var router = express.Router();
 
+var passport = require('passport');
+var multer  = require('multer');
+
 var User = require('../model/User.js');
 var Cate = require('../model/Cate.js');
 var Product = require('../model/Product.js');
 var GioHang = require('../model/giohang.js');
 var Cart = require('../model/Cart.js');
 
-var bcrypt = require('bcryptjs');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+
+var storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+	  cb(null, './public/upload');
+	},
+	filename: function (req, file, cb) {
+	  cb(null, Date.now() + '_' + file.originalname);
+	  // cb(file.originalname);
+	}
+});
+
+var upload = multer({ storage: storage });
 
 var countJson = function(json){
 	var count = 0;
@@ -54,13 +68,6 @@ router.post('/dat-hang.html', function (req, res) {
 	var giohang = new GioHang( (req.session.cart) ? req.session.cart : {items: {}} );
 	var data = giohang.convertArray();
 
-	data.forEach(a => {
-		Product.findByIdAndUpdate(a.item._id).then(function(pro) {
-			pro.soluong = pro.soluong - a.soluong;
-			pro.save();
-		});
-	});
-	
 	var cart = new Cart({
 		  name 		:  req.body.name,
 		  email 	: req.body.email,
@@ -90,7 +97,6 @@ router.get('/dat-hang.html', function (req, res) {
 		res.redirect('/');
 	}
 });
-
 
 router.post('/menu', function (req, res) {
  	Cate.find().then(function(data){
@@ -143,6 +149,7 @@ router.post('/delCart', function (req, res) {
 	
 });
 
+
 router.post('/binh-luan.html', function (req, res, next) {
 	try {
 		var value = req.body.value;
@@ -161,11 +168,6 @@ router.post('/binh-luan.html', function (req, res, next) {
 				cart.save();
 			});
 		});
-		Product.find().then(function(data) {
-			data.forEach(element => {
-				console.log(element.name, element.comment);
-			});
-		});
 
 	} catch (err) {
 		console.log(err.message);
@@ -176,19 +178,34 @@ router.get('/binh-luan.html', checkAdmin, function (req, res) {
 	res.redirect(req.get('referer'));
 });
 
-router.post('/dang-ky-user.html', function(req, res) {
+router.post('/dang-ky-user.html', upload.single('hinh'), function(req, res) {
 
-	var user = new User({
-		fullname 		: req.body.name,
-		email 			: req.body.email,
-		password 		: req.body.password,
-		img				: "",
-		role			: "user"
-	});
+	console.log("file: ", req.file);
+	var errors = req.validationErrors();
+	if (errors) {
+		var file = './public/upload/' + req.file.filename;
+		  var fs = require('fs');
+			fs.unlink(file, function(e){
+				if(e) throw e;
+			});
+		res.redirect(req.get('referer'));
+	}else{
+		var user = new User({
+			fullname    : req.body.name,
+			img			: req.file.filename,
+			email       : req.body.email,
+			password    : req.body.password,
+			role        : "user"
+		});
 
-	user.save().then(function(){
-		res.redirect('/');
-  	});
+		user.save().then(function(){
+			res.redirect('/'); 
+		});
+	}
+});
+
+router.post('/getUser', function (req, res) {
+	res.json(req.user);
 });
 
 router.get('/dang-ky-user.html', function(req, res) {
@@ -200,10 +217,18 @@ router.get('/dang-nhap-user.html', function(req, res, next) {
 });
 
 router.post('/dang-nhap-user.html',
-	passport.authenticate('local', { successRedirect: '/',
+	// passport.authenticate('local', { successRedirect: '/',
+	passport.authenticate('local', {
 								failureRedirect: '/dang-nhap-user.html',
-								failureFlash: true })
-);
+								failureFlash: true }), 
+	function(req, res) {
+		if (req.user.role === 'user'){
+			res.redirect('/');
+		}
+		else {
+			res.redirect('/dang-nhap-user.html');
+		}
+});
 
 passport.use(new LocalStrategy({
     usernameField: 'email',
@@ -213,10 +238,10 @@ passport.use(new LocalStrategy({
       User.findOne({email: username}, function(err, username){
           if(err) throw err;
           if(username){
-            if (username.password === password && username.role === 'user') {
+            if (username.password === password) {
                       return done(null, username);
             } else {
-                     return done(null, false, { message: 'Tài Khoảng Hoặc Mật khẩu Không Đúng' });
+                     return done(null, false, { message: 'Tài Khoản Hoặc Mật khẩu Không Đúng' });
             }
           } else{
              return done(null, false, { message: 'Không Tồn Tại Tài Khoản' });
@@ -240,14 +265,12 @@ router.get('/dang-xuat-user.html', function (req, res) {
     res.redirect('/');
 });
 
-
 function checkAdmin(req, res, next){
 	var url = req.originalUrl;
 
     if(req.isAuthenticated()){
       next();
     }else{
-		// res.render('/dang-nhap-user.html', {url: req.originalUrl});
 		res.redirect('/dang-nhap-user.html');
     }
 }

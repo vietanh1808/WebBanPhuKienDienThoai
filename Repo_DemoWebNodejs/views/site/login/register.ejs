@@ -38,16 +38,20 @@
                             <%= error%>
                         </div>
                         <%}%>
-                        <form role="form" action="" method="POST">
+                        <form role="form" action="" method="POST" enctype="multipart/form-data">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" id="name" placeholder="Họ Tên" name="name" type="text" autofocus>
+                                    <input class="form-control" id="name" required="required" placeholder="Họ Tên" name="name" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" id="email" placeholder="E-mail" name="email" type="email" >
+                                    <input class="form-control" id="email" required="required" placeholder="E-mail" name="email" type="email" >
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" id="password" placeholder="Mật Khẩu" name="password" type="password" value="">
+                                    <input class="form-control" required="required" id="password" placeholder="Mật Khẩu" name="password" type="password" value="">
+                                </div>
+                                <div class="form-group">
+                                    <p>Chọn ảnh cá nhân</p>
+                                    <input type="file" id="hinh" placeholder="Chọn ảnh cá nhân" required="required" class="form-control" name="hinh">
                                 </div>
                                 <button type="submit" class="btn btn-lg btn-success btn-block">Sign In</button>
                             </fieldset>
