@@ -11,7 +11,12 @@ var LocalStrategy1 = require('passport-local').Strategy;
 
 /* GET home page. */
 router.get('/', checkAdmin, function(req, res, next) {
+  if (req.user.role === 'admin')
     res.render('admin/main/index');
+  else   
+    res.redirect('/admin/dang-nhap.html');
+                    
+    // res.render('admin/main/index');
 });
 
 router.get('/dang-nhap.html', function(req, res, next) {
@@ -26,13 +31,7 @@ router.post('/dang-nhap.html',
   passport.authenticate('local', { successRedirect: '/admin',
   // passport.authenticate('local', { 
                                    failureRedirect: '/admin/dang-nhap.html',
-                                   failureFlash: true }), 
-                  function(req, res) {
-                    if (req.user.role === 'admin')
-                      res.redirect('/admin');
-                    else   
-                      res.redirect('/admin/dang-nhap.html');
-                    }
+                                   failureFlash: true })
 );
 
 passport.use(new LocalStrategy1({

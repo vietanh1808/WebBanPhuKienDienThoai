@@ -19,7 +19,6 @@ var storage = multer.diskStorage({
 	},
 	filename: function (req, file, cb) {
 	  cb(null, Date.now() + '_' + file.originalname);
-	  // cb(file.originalname);
 	}
 });
 
@@ -222,7 +221,7 @@ router.post('/dang-nhap-user.html',
 								failureRedirect: '/dang-nhap-user.html',
 								failureFlash: true }), 
 	function(req, res) {
-		if (req.user.role === 'user'){
+		if (req.user.role === 'user' || req.user.role === 'users'){
 			res.redirect('/');
 		}
 		else {

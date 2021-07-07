@@ -144,8 +144,8 @@ function checkAdmin(req, res, next){
     if(req.isAuthenticated()){
       next();
     }else{
-      next();
-      // res.redirect('/admin/dang-nhap.html');
+    //   next();
+      res.redirect('/admin/dang-nhap.html');
     }
 }
 

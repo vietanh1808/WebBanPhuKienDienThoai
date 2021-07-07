@@ -25,13 +25,6 @@ router.get('/:id/xem-cart.html', checkAdmin, function(req, res, next) {
 
 router.get('/:id/thanh-toan-cart.html',checkAdmin, function(req, res, next) {
  	var id = req.params.id;
-
-	//  data.forEach(a => {
-		//  Product.findByIdAndUpdate(a.item._id).then(function(pro) {
-		// 	 pro.soluong = pro.soluong - a.soluong;
-		// 	 pro.save();
-		//  });
-	//  });
 	 
  	Cart.findById(id, function(err, data){
 		data.cart.forEach(a => {
@@ -42,7 +35,7 @@ router.get('/:id/thanh-toan-cart.html',checkAdmin, function(req, res, next) {
 		});
  		data.st = 1;
  		data.save();
- 		req.flash('success_msg', 'Đã Thêm Thành Công');
+ 		req.flash('success_msg', 'Đã Thanh Toán Thành Công');
 		res.redirect('/admin/cart/'+id+'/xem-cart.html'); 
  	});
 });
